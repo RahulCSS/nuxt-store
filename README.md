@@ -73,3 +73,18 @@ bun run preview
 ```
 
 Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+
+
+## New Project
+
+Use the following command to create a new starter project
+```bash
+# npm
+npx nuxi@latest init <project-name>
+```
+
+Automate migration to Nuxt 4 by running
+```bash
+# npm
+npx codemod@latest nuxt/4/file-structure
+```
