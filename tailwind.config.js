@@ -11,10 +11,6 @@ export default {
     extend: {
       fontFamily:{
         Roboto: "Roboto,sans-serif",
-      },
-      container: {
-        center: true,
-        padding: "2rem",
       }
     },
   },
