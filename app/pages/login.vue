@@ -7,6 +7,17 @@
     const loginSuccess = ref(false);
     const router = useRouter();
 
+    // Meta Data
+    useSeoMeta({
+        title: "Nuxt - Login",
+        description: "Login to experience Nuxt",
+        ogTitle:"Nuxt - Login",
+        ogDescription:"Login to experience Nuxt",
+        ogImage:"/logo.vue",
+        ogUrl:`http:localhost:3000/login`,
+    })
+
+    // Form Validation
     function validateForm() {
         let valid = true
         emailError.value = ''
@@ -28,22 +39,39 @@
         }
     return valid
     }   
-    
+
+    // Handle login (Simulated Login - Hashes password before sending to server)
     async function submit() {
+        const mockUser = { email: email.value, password: password.value };
         if (validateForm()) {
-            const mockUser = { email: 'test@example.com', password: 'password123' };
-            
-            if (email.value === mockUser.email && password.value === mockUser.password) {
-                localStorage.setItem('authToken', 'mock-token-123');
-                loginSuccess.value = true;
-                setTimeout(() => {
-                    router.push('/listing');
-                }, 2000);
-            } else {
-            loginError.value = 'Invalid credentials. Please try again.';
+            try {
+                const response = await fetch('https://fakestoreapi.com/auth/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        username: "johnd", 
+                        password: "m38rmF$", 
+                    }),
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    localStorage.setItem('authToken', data.token);
+                    loginSuccess.value = true;
+                    setTimeout(() => {
+                        router.push('/listing');
+                    }, 2000);
+                } else {
+                    loginError.value = 'Invalid credentials. Please try again.';
+                }
+            } catch (error) {
+                loginError.value = 'Something went wrong. Please try again later.';
             }
-            console.log(mockUser);
         }
+            console.log(mockUser);
     }
 </script>
 
@@ -51,6 +79,8 @@
 <template>
     <div class ="bg-black h-screen w-screen p-4 flex justify-center items-center">
         <div class="w-[30vw] h-[40vh]">
+
+            <!-- Logo & Description -->
             <logo />
             <h1 class="text-white font-bold text-xl mt-16"> Experience the Nuxt Store</h1>
             <p class="text-zinc-300 text-m mt-1">Not registered? 
@@ -58,6 +88,8 @@
                     <span class="font-bold underline text-green-400">Sign up</span> for a free account
                 </NuxtLink>
             </p>
+
+            <!-- Login Form -->
             <form @submit.prevent = "submit">
                 <div class="mt-8">
                     <label  class="text-zinc-300 text-m block mb-1" for="">Email Address</label>
@@ -79,10 +111,13 @@
                     <button class="text-black block w-full bg-green-400 p-2 rounded-full">Login -> </button>
                 </div>
             </form>
+
+            <!-- Login Message -->
             <div v-if="loginSuccess" class="mt-8 p-4 bg-zinc-800 text-green-400 border-1 rounded-full">
                 <p>Login successful! Redirecting...</p>
             </div>
             <p v-if="loginError" class="error">{{ loginError }}</p>
+
         </div>
         <slot />
     </div>

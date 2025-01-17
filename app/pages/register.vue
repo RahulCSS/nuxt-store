@@ -9,6 +9,17 @@
     const signupSuccess = ref(false);
     const router = useRouter();
 
+    // Meta Data
+    useSeoMeta({
+        title: "Nuxt - Signup",
+        description: "Signup to experience Nuxt",
+        ogTitle:"Nuxt - Signup",
+        ogDescription:"Signup to experience Nuxt",
+        ogImage:"/logo.vue",
+        ogUrl:`http:localhost:3000/register`,
+    })
+
+    // Form Validation
     function validateForm() {
         let valid = true
         emailError.value = ''
@@ -40,6 +51,7 @@
     return valid
     }   
 
+    // Handle Signup (Simulated registration)
     async function submit() {
         const mockUser = { email: email.value, password: password.value };
         if (validateForm()) {
@@ -58,6 +70,8 @@
 <template>
     <div class ="bg-black h-screen w-screen p-4 flex justify-center items-center">
         <div class="w-[30vw] h-[40vh]">
+
+            <!-- Logo & Desciption -->
             <logo />
             <h1 class="text-white font-bold text-xl mt-16"> Register to experience the Nuxt Store</h1>
             <p class="text-zinc-300 text-m mt-1">Already registered? 
@@ -65,6 +79,8 @@
                     <span class="font-bold underline text-green-400">Login</span> to your account
                 </NuxtLink>
             </p>
+
+            <!-- Signup Form -->
             <form @submit.prevent = "submit">
                 <div class="mt-8">
                     <label  class="text-zinc-300 text-m block mb-1" for="">Email Address</label>
@@ -97,6 +113,8 @@
                     <button class="text-black block w-full bg-green-400 p-2 rounded-full">Signup -> </button>
                 </div>
             </form>
+
+            <!-- Signup Message -->
             <div v-if="signupSuccess" class="mt-8 p-4 bg-zinc-800 text-green-400 border-1 rounded-full">
                 <p>Sign up successful! Redirecting...</p>
             </div>
