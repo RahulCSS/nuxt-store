@@ -3,9 +3,12 @@
 </script>
 
 <template>
-    <div>
-        <h1>Default Layout</h1>
-        <slot />
+    <div class="flex flex-col min-h-screen ">
+        <baseHeader />
+        <div class=" bg-black flex justify-center items-center flex-grow">
+            <slot />
+        </div>
+        <baseFooter />
     </div>
 </template>
 

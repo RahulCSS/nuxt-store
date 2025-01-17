@@ -1,4 +1,12 @@
 <script setup lang="ts">
+
+    // Static Meta Data
+    definePageMeta({
+        title: "Nuxt - Signup",
+        description: "Signup to experience Nuxt",
+        layout: 'empty',
+    });
+
     const email = ref('')
     const password = ref('')
     const confirmPassword = ref('')
@@ -8,16 +16,6 @@
     const signupError = ref('');
     const signupSuccess = ref(false);
     const router = useRouter();
-
-    // Meta Data
-    useSeoMeta({
-        title: "Nuxt - Signup",
-        description: "Signup to experience Nuxt",
-        ogTitle:"Nuxt - Signup",
-        ogDescription:"Signup to experience Nuxt",
-        ogImage:"/logo.vue",
-        ogUrl:`http:localhost:3000/register`,
-    })
 
     // Form Validation
     function validateForm() {

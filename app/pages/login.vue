@@ -1,4 +1,12 @@
 <script setup lang="ts">
+
+    // Static Meta Data
+    definePageMeta({
+        title: "Nuxt - Login",
+        description: "Login to experience Nuxt",
+        layout: 'empty',
+    });
+
     const email = ref('')
     const password = ref('')
     const emailError = ref('');
@@ -6,16 +14,6 @@
     const loginError = ref('');
     const loginSuccess = ref(false);
     const router = useRouter();
-
-    // Meta Data
-    useSeoMeta({
-        title: "Nuxt - Login",
-        description: "Login to experience Nuxt",
-        ogTitle:"Nuxt - Login",
-        ogDescription:"Login to experience Nuxt",
-        ogImage:"/logo.vue",
-        ogUrl:`http:localhost:3000/login`,
-    })
 
     // Form Validation
     function validateForm() {
@@ -62,7 +60,7 @@
                     localStorage.setItem('authToken', data.token);
                     loginSuccess.value = true;
                     setTimeout(() => {
-                        router.push('/listing');
+                        router.push('/');
                     }, 2000);
                 } else {
                     loginError.value = 'Invalid credentials. Please try again.';
